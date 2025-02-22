@@ -33,6 +33,11 @@ public interface SeckillUserService {
     SeckillUser getSeckillUserByUserName(String userName);
 
     /**
+     * 获取用户信息
+     */
+    SeckillUser getSeckillUserById(Long userId);
+
+    /**
      * 登录
      */
     String login(String userName, String password);

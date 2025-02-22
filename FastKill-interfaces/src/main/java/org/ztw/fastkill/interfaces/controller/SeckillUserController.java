@@ -29,7 +29,6 @@ import org.ztw.fastkill.domain.dto.SeckillUserDTO;
 import org.ztw.fastkill.domain.model.SeckillUser;
 
 
-
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
@@ -38,24 +37,25 @@ public class SeckillUserController {
 
     @Autowired
     private SeckillUserService seckillUserService;
+
     /**
      * 测试系统
      */
     @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseMessage<SeckillUser> getUser(@RequestParam(value = "username") String userName){
-       return ResponseMessageBuilder.build(ErrorCode.SUCCESS.getCode(), seckillUserService.getSeckillUserByUserName(userName));
+    public ResponseMessage<SeckillUser> getUser(@RequestAttribute("userId") Long userId) {
+        return ResponseMessageBuilder.build(ErrorCode.SUCCESS.getCode(), seckillUserService.getSeckillUserById(userId));
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseMessage<String> login(@RequestBody SeckillUserDTO seckillUserDTO){
+    public ResponseMessage<String> login(@RequestBody SeckillUserDTO seckillUserDTO) {
         log.info("用户登录信息：{}", seckillUserDTO);
-        try{
+        try {
             ResponseMessage<String> responseMessage = ResponseMessageBuilder.build(ErrorCode.SUCCESS.getCode(), seckillUserService.login(seckillUserDTO.getUserName(), seckillUserDTO.getPassword()));
             log.info("用户登录返回信息：{}", JSON.toJSON(responseMessage));
             return responseMessage;
-        }catch (SeckillException e){
+        } catch (SeckillException e) {
             return ResponseMessageBuilder.build(e.getCode(), e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseMessageBuilder.build(ErrorCode.SERVER_EXCEPTION.getCode(), e.getMessage());
         }
 

@@ -52,6 +52,12 @@ public class SeckillUserServiceImpl implements SeckillUserService {
     }
 
     @Override
+    public SeckillUser getSeckillUserById(Long userId) {
+        String key = SeckillConstants.getKey(SeckillConstants.USER_KEY_PREFIX, String.valueOf(userId));
+        return (SeckillUser) redisService.get(key);
+    }
+
+    @Override
     public String login(String userName, String password) {
         if (StringUtils.isBlank(userName)) {
             throw new SeckillException(HttpCode.USERNAME_IS_NULL);
