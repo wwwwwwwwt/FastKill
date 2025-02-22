@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ztw.fastkill.domain.code;
+package org.ztw.fastkill.common.code;
 
 public enum ErrorCode {
 

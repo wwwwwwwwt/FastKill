@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ztw.fastkill.domain.enums;
+package org.ztw.fastkill.common.enums;
 
 /**
  * @author binghe(微信 : hacker_binghe)

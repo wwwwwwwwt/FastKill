@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ztw.fastkill.application.service;
-
-
-import org.ztw.fastkill.domain.model.SeckillUser;
+package org.ztw.fastkill.common.response;
 
 /**
- * @author binghe(微信 : hacker_binghe)
- * @version 1.0.0
- * @description 用户
- * @github https://github.com/binghe001
- * @copyright 公众号: 冰河技术
+ * @description 响应消息构建类
  */
-public interface SeckillUserService {
+public class ResponseMessageBuilder {
 
-    /**
-     * 根据用户名获取用户信息
-     */
-    SeckillUser getSeckillUserByUserName(String userName);
+    public static <T> ResponseMessage<T> build(Integer code, T body){
+        return new ResponseMessage<T>(code, body);
+    }
 
-    /**
-     * 登录
-     */
-    String login(String userName, String password);
+    public static <T> ResponseMessage<T> build(Integer code){
+        return new ResponseMessage<T>(code);
+    }
+
 }

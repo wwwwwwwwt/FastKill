@@ -16,11 +16,20 @@
 package org.ztw.fastkill.application.service.impl;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ztw.fastkill.application.service.RedisService;
 import org.ztw.fastkill.application.service.SeckillUserService;
+import org.ztw.fastkill.common.code.HttpCode;
+import org.ztw.fastkill.common.constants.SeckillConstants;
+import org.ztw.fastkill.common.exception.SeckillException;
+import org.ztw.fastkill.common.utils.shiro.CommonsUtils;
+import org.ztw.fastkill.common.utils.shiro.JwtUtils;
 import org.ztw.fastkill.domain.model.SeckillUser;
 import org.ztw.fastkill.domain.repository.SeckillUserRepository;
+
+import javax.annotation.Resource;
 
 /**
  * @author binghe(微信 : hacker_binghe)
@@ -31,12 +40,38 @@ import org.ztw.fastkill.domain.repository.SeckillUserRepository;
  */
 @Service
 public class SeckillUserServiceImpl implements SeckillUserService {
+
     @Autowired
     private SeckillUserRepository seckillUserRepository;
-
+    @Resource
+    private RedisService redisService;
 
     @Override
     public SeckillUser getSeckillUserByUserName(String userName) {
         return seckillUserRepository.getSeckillUserByUserName(userName);
+    }
+
+    @Override
+    public String login(String userName, String password) {
+        if (StringUtils.isBlank(userName)) {
+            throw new SeckillException(HttpCode.USERNAME_IS_NULL);
+        }
+        if (StringUtils.isBlank(password)) {
+            throw new SeckillException(HttpCode.PASSWORD_IS_NULL);
+        }
+        SeckillUser seckillUser = getSeckillUserByUserName(userName);
+        if (null == seckillUser) {
+            throw new SeckillException(HttpCode.FAILURE);
+        }
+        String encryptPassword = CommonsUtils.encryptPassword(password, userName);
+        if (!encryptPassword.equals(seckillUser.getPassword())) {
+            throw new SeckillException(HttpCode.PASSWORD_IS_ERROR);
+        }
+        String token = JwtUtils.sign(seckillUser.getId());
+        String key = SeckillConstants.getKey(SeckillConstants.USER_KEY_PREFIX, String.valueOf(seckillUser.getId()));
+        //缓存到Redis
+        redisService.set(key, seckillUser);
+        //返回Token
+        return token;
     }
 }

@@ -16,6 +16,7 @@
         <module>FastKill-interfaces</module>
         <module>FastKill-api</module>
         <module>FastKill-nginx</module>
+        <module>FastKill-common</module>
     </modules>
 
     <parent>
@@ -28,7 +29,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>2.4.5</spring-boot.version>
+        <spring-boot.version>2.7.12</spring-boot.version>
         <spring-cloud-alibaba.version>2.2.2.RELEASE</spring-cloud-alibaba.version>
         <fastjson.version>1.2.72</fastjson.version>
         <rocketmq.version>2.2.1</rocketmq.version>
@@ -43,6 +44,8 @@
         <junit.version>4.12</junit.version>
         <mybatis.version>3.4.6</mybatis.version>
         <mybatis.spring.version>1.3.2</mybatis.spring.version>
+        <shiro.spring.version>1.3.2</shiro.spring.version>
+        <jwt.version>3.4.0</jwt.version>
         <docker.image.prefix>seckill</docker.image.prefix>
     </properties>
 
@@ -101,7 +104,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>6.2.3.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -166,6 +173,23 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
     </dependencies>
 

@@ -13,23 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ztw.fastkill.domain.response;
+package org.ztw.fastkill.common.enums;
 
 /**
  * @author binghe(微信 : hacker_binghe)
  * @version 1.0.0
- * @description 响应消息构建类
+ * @description 活动状态
  * @github https://github.com/binghe001
  * @copyright 公众号: 冰河技术
  */
-public class ResponseMessageBuilder {
+public enum SeckillOrderStatus {
 
-    public static <T> ResponseMessage<T> build(Integer code, T body){
-        return new ResponseMessage<T>(code, body);
+    CREATED(1),
+    PAID(2),
+    CANCELED(0),
+    DELETED(-1);
+
+    private final Integer code;
+
+    SeckillOrderStatus(Integer code) {
+        this.code = code;
     }
 
-    public static <T> ResponseMessage<T> build(Integer code){
-        return new ResponseMessage<T>(code);
+    public static boolean isCancled(Integer status) {
+        return CANCELED.getCode().equals(status);
     }
 
+    public static boolean isDeleted(Integer status) {
+        return DELETED.getCode().equals(status);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
 }

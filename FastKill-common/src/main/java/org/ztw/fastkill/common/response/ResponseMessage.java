@@ -13,37 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ztw.fastkill.domain.enums;
+package org.ztw.fastkill.common.response;
+
+import java.io.Serializable;
 
 /**
- * @author binghe(微信 : hacker_binghe)
- * @version 1.0.0
- * @description 活动状态
- * @github https://github.com/binghe001
- * @copyright 公众号: 冰河技术
+ * @description 响应的数据
  */
-public enum SeckillOrderStatus {
+public class ResponseMessage<T> implements Serializable {
 
-    CREATED(1),
-    PAID(2),
-    CANCELED(0),
-    DELETED(-1);
+    private Integer code;
+    private T data;
 
-    private final Integer code;
 
-    SeckillOrderStatus(Integer code) {
+    public ResponseMessage() {
+    }
+
+    public ResponseMessage(Integer code, T data) {
         this.code = code;
+        this.data = data;
     }
 
-    public static boolean isCancled(Integer status) {
-        return CANCELED.getCode().equals(status);
-    }
-
-    public static boolean isDeleted(Integer status) {
-        return DELETED.getCode().equals(status);
+    public ResponseMessage(Integer code) {
+        this.code = code;
     }
 
     public Integer getCode() {
         return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

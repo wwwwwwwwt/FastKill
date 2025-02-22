@@ -15,18 +15,25 @@
  */
 package org.ztw.fastkill.interfaces.controller;
 
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.ztw.fastkill.application.service.SeckillUserService;
-import org.ztw.fastkill.domain.code.ErrorCode;
+
+import org.ztw.fastkill.common.code.ErrorCode;
+import org.ztw.fastkill.common.exception.SeckillException;
+import org.ztw.fastkill.common.response.ResponseMessage;
+import org.ztw.fastkill.common.response.ResponseMessageBuilder;
+import org.ztw.fastkill.domain.dto.SeckillUserDTO;
 import org.ztw.fastkill.domain.model.SeckillUser;
-import org.ztw.fastkill.domain.response.ResponseMessage;
-import org.ztw.fastkill.domain.response.ResponseMessageBuilder;
+
 
 
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
+@Slf4j
 public class SeckillUserController {
 
     @Autowired
@@ -37,5 +44,20 @@ public class SeckillUserController {
     @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<SeckillUser> getUser(@RequestParam(value = "username") String userName){
        return ResponseMessageBuilder.build(ErrorCode.SUCCESS.getCode(), seckillUserService.getSeckillUserByUserName(userName));
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseMessage<String> login(@RequestBody SeckillUserDTO seckillUserDTO){
+        log.info("用户登录信息：{}", seckillUserDTO);
+        try{
+            ResponseMessage<String> responseMessage = ResponseMessageBuilder.build(ErrorCode.SUCCESS.getCode(), seckillUserService.login(seckillUserDTO.getUserName(), seckillUserDTO.getPassword()));
+            log.info("用户登录返回信息：{}", JSON.toJSON(responseMessage));
+            return responseMessage;
+        }catch (SeckillException e){
+            return ResponseMessageBuilder.build(e.getCode(), e.getMessage());
+        }catch (Exception e){
+            return ResponseMessageBuilder.build(ErrorCode.SERVER_EXCEPTION.getCode(), e.getMessage());
+        }
+
     }
 }
