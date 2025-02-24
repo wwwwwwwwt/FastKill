@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ztw.fastkill.infrastructure.mapper.SeckillActivityMapper">
+
+    <resultMap id="resultMap" type="org.ztw.fastkill.domain.model.SeckillActivity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="activity_desc" property="activityDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="saveSecKillActivity" parameterType="org.ztw.fastkill.domain.model.SeckillActivity" keyProperty="id" useGeneratedKeys="true">
+        insert into seckill_activity (id, activity_name, start_time, end_time, status, activity_desc)
+        values (#{id}, #{activityName}, #{startTime}, #{endTime}, #{status}, #{activityDesc})
+    </insert>
+    <update id="updateSecKillActivity">
+        update seckill_activity
+        <set>
+            <if test="activityName != null">
+                activity_name = #{activityName},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="activityDesc != null">
+                activity_desc = #{activityDesc},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getSecKillActivityListByStatus" resultMap="resultMap">
+        select id, activity_name, start_time, end_time, status, activity_desc
+        from seckill_activity
+        where status = #{status}
+    </select>
+    <select id="getSecKillActivityListByStatusAndTime"
+            resultMap="resultMap">
+    <![CDATA[
+        select id, activity_name, start_time, end_time, status, activity_desc
+        from seckill_activity
+        where status = #{status}
+          and start_time <= #{currentTime}
+          and end_time >= #{currentTime}
+    ]]>
+    </select>
+    <select id="getSecKillActivityById" resultMap="resultMap">
+        select id, activity_name, start_time, end_time, status, activity_desc
+        from seckill_activity
+        where id = #{id}
+    </select>
+
+
+</mapper>
