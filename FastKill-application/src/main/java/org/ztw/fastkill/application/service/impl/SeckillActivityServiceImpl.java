@@ -39,57 +39,51 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
     }
 
     @Override
-    public List<SecKillActivityDTO> getSecKillActivityListByStatus(Integer status) {
+    public List<SeckillActivity> getSecKillActivityListByStatus(Integer status) {
         List<SeckillActivity> seckillActivityList = secKillActivityRepository.getSecKillActivityListByStatus(status);
         if (seckillActivityList == null || seckillActivityList.isEmpty()) {
             return Collections.emptyList();
         }
-        List<SecKillActivityDTO> secKillActivityDTOList = new ArrayList<>();
-        for (SeckillActivity seckillActivity : seckillActivityList) {
-            SecKillActivityDTO secKillActivityDTO = new SecKillActivityDTO();
-            secKillActivityDTO.setActivityName(seckillActivity.getActivityName());
-            secKillActivityDTO.setStartTime(seckillActivity.getStartTime());
-            secKillActivityDTO.setEndTime(seckillActivity.getEndTime());
-            secKillActivityDTO.setStatus(seckillActivity.getStatus());
-            secKillActivityDTO.setActivityDesc(seckillActivity.getActivityDesc());
-            secKillActivityDTOList.add(secKillActivityDTO);
-        }
-        return secKillActivityDTOList;
+//        List<SecKillActivityDTO> secKillActivityDTOList = new ArrayList<>();
+//        for (SeckillActivity seckillActivity : seckillActivityList) {
+//            SecKillActivityDTO secKillActivityDTO = new SecKillActivityDTO();
+//            secKillActivityDTO.setActivityName(seckillActivity.getActivityName());
+//            secKillActivityDTO.setStartTime(seckillActivity.getStartTime());
+//            secKillActivityDTO.setEndTime(seckillActivity.getEndTime());
+//            secKillActivityDTO.setStatus(seckillActivity.getStatus());
+//            secKillActivityDTO.setActivityDesc(seckillActivity.getActivityDesc());
+//            secKillActivityDTOList.add(secKillActivityDTO);
+//        }
+        return seckillActivityList;
     }
 
     @Override
-    public List<SecKillActivityDTO> getSecKillActivityListByStatusAndTime(Integer status, Date currentTime) {
+    public List<SeckillActivity> getSecKillActivityListByStatusAndTime(Integer status, Date currentTime) {
         if (status == null || currentTime == null) return Collections.emptyList();
         List<SeckillActivity> seckillActivityList = secKillActivityRepository.getSecKillActivityListByStatusAndTime(status, currentTime);
         if(seckillActivityList == null || seckillActivityList.isEmpty()){
             return Collections.emptyList();
         }
-        List<SecKillActivityDTO> secKillActivityDTOList = new ArrayList<>();
-        for (SeckillActivity seckillActivity : seckillActivityList) {
-            SecKillActivityDTO secKillActivityDTO = new SecKillActivityDTO();
-            secKillActivityDTO.setActivityName(seckillActivity.getActivityName());
-            secKillActivityDTO.setStartTime(seckillActivity.getStartTime());
-            secKillActivityDTO.setEndTime(seckillActivity.getEndTime());
-            secKillActivityDTO.setStatus(seckillActivity.getStatus());
-            secKillActivityDTO.setActivityDesc(seckillActivity.getActivityDesc());
-            secKillActivityDTOList.add(secKillActivityDTO);
-        }
-        return secKillActivityDTOList;
+//        List<SecKillActivityDTO> secKillActivityDTOList = new ArrayList<>();
+//        for (SeckillActivity seckillActivity : seckillActivityList) {
+//            SecKillActivityDTO secKillActivityDTO = new SecKillActivityDTO();
+//            secKillActivityDTO.setActivityName(seckillActivity.getActivityName());
+//            secKillActivityDTO.setStartTime(seckillActivity.getStartTime());
+//            secKillActivityDTO.setEndTime(seckillActivity.getEndTime());
+//            secKillActivityDTO.setStatus(seckillActivity.getStatus());
+//            secKillActivityDTO.setActivityDesc(seckillActivity.getActivityDesc());
+//            secKillActivityDTOList.add(secKillActivityDTO);
+//        }
+        return seckillActivityList;
     }
 
     @Override
-    public SecKillActivityDTO getSecKillActivityById(Long id) {
+    public SeckillActivity getSecKillActivityById(Long id) {
         if(id == null) throw new SeckillException(HttpCode.PARAMS_INVALID);
         SeckillActivity seckillActivity = secKillActivityRepository.getSecKillActivityById(id);
         if(seckillActivity == null) throw new SeckillException(HttpCode.GOODS_NOT_EXISTS);
         log.info("getSecKillActivityById:{}", JSON.toJSON(seckillActivity));
-        return SecKillActivityDTO.builder()
-                .activityName(seckillActivity.getActivityName())
-                .startTime(seckillActivity.getStartTime())
-                .endTime(seckillActivity.getEndTime())
-                .status(seckillActivity.getStatus())
-                .activityDesc(seckillActivity.getActivityDesc())
-                .build();
+        return seckillActivity;
     }
 
     @Override

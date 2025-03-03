@@ -26,15 +26,15 @@ public class SeckillActivityController {
     private SeckillActivityService seckillActivityService;
 
     @RequestMapping(value = "/getActivityById", method = {RequestMethod.GET})
-    public ResponseMessage<SecKillActivityDTO> getSecKillActivityById(@RequestParam Long id) {
+    public ResponseMessage<SeckillActivity> getSecKillActivityById(@RequestParam Long id) {
         log.info("getSecKillActivityById: {}", id);
         try{
-            SecKillActivityDTO secKillActivityDTO = seckillActivityService.getSecKillActivityById(id);
-            if (secKillActivityDTO == null) {
+            SeckillActivity seckillActivity = seckillActivityService.getSecKillActivityById(id);
+            if (seckillActivity == null) {
                 return ResponseMessageBuilder.build(HttpCode.ACTIVITY_NOT_EXISTS.getCode());
             }
-            log.info("getSecKillActivityById返回信息：{}", JSON.toJSON(secKillActivityDTO));
-            return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), secKillActivityDTO);
+            log.info("getSecKillActivityById返回信息：{}", JSON.toJSON(seckillActivity));
+            return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillActivity);
         } catch (SeckillException e) {
             log.error("getSecKillActivityById异常：{}", e.getMessage());
             return ResponseMessageBuilder.build(e.getCode());
@@ -45,10 +45,10 @@ public class SeckillActivityController {
     }
 
     @RequestMapping(value = "/getActivityListByStatus", method = {RequestMethod.GET})
-    public ResponseMessage<List<SecKillActivityDTO>> getSecKillActivityListByStatus(@RequestParam Integer status) {
+    public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatus(@RequestParam Integer status) {
         log.info("getSecKillActivityListByStatus: {}", status);
         try{
-            List<SecKillActivityDTO> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatus(status);
+            List<SeckillActivity> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatus(status);
             log.info("getSecKillActivityListByStatus返回信息：{}", JSON.toJSON(secKillActivityDTOList));
             return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), secKillActivityDTOList);
         } catch (SeckillException e) {
@@ -61,10 +61,10 @@ public class SeckillActivityController {
     }
 
     @RequestMapping(value = "/getActivityListByStatusAndTime", method = {RequestMethod.GET})
-    public ResponseMessage<List<SecKillActivityDTO>> getSecKillActivityListByStatusAndTime(@RequestParam Integer status, @RequestParam Date currentTime) {
+    public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatusAndTime(@RequestParam Integer status, @RequestParam Date currentTime) {
         log.info("getSecKillActivityListByStatusAndTime: {}, {}", status, currentTime);
         try{
-            List<SecKillActivityDTO> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatusAndTime(status, currentTime);
+            List<SeckillActivity> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatusAndTime(status, currentTime);
             log.info("getSecKillActivityListByStatusAndTime返回信息：{}", JSON.toJSON(secKillActivityDTOList));
             return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), secKillActivityDTOList);
         } catch (SeckillException e) {
@@ -77,7 +77,7 @@ public class SeckillActivityController {
     }
 
     @RequestMapping(value = "/getActivityListByStatusAndNow", method = {RequestMethod.GET})
-    public ResponseMessage<List<SecKillActivityDTO>> getSecKillActivityListByStatusAndNow(@RequestParam Integer status) {
+    public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatusAndNow(@RequestParam Integer status) {
        return getSecKillActivityListByStatusAndTime(status, new Date());
     }
 
@@ -98,7 +98,7 @@ public class SeckillActivityController {
     }
 
     /**
-     * 
+     *
      * @param secKillActivity
      * @return
      */
