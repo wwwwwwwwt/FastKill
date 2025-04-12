@@ -15,10 +15,10 @@ import org.ztw.fastkill.domain.dto.SeckillUserDTO;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SeckillException.class)
-    public ResponseMessage<SeckillUserDTO> handleException(SeckillException e)
+    public ResponseMessage<String> handleException(SeckillException e)
     {
         log.error("SeckillException: {}", e.getMessage());
-        return ResponseMessageBuilder.build(e.getCode(), null);
+        return ResponseMessageBuilder.build(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

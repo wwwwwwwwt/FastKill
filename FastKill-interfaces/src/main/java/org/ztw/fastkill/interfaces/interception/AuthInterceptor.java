@@ -27,6 +27,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         if(StringUtils.isEmpty(token)){
             throw new SeckillException(HttpCode.USER_NOT_LOGIN);
         }
+        if(!JwtUtils.verify(token, SeckillConstants.JWT_SECRET)){
+            throw new SeckillException(HttpCode.USER_NOT_LOGIN);
+        }
         Long userId = JwtUtils.getUserId(token);
         if(null == userId){
             throw new SeckillException(HttpCode.USER_NOT_LOGIN);
