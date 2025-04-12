@@ -44,7 +44,7 @@ public class SeckillActivityController {
         }
     }
 
-    @RequestMapping(value = "/getSecKillActivityList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getSecKillActivityList", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityList() {
         try{
             List<SeckillActivity> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatus(1);

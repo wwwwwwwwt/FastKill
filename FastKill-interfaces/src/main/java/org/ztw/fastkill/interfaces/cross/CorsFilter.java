@@ -1,38 +1,52 @@
 package org.ztw.fastkill.interfaces.cross;
 
-import org.springframework.http.HttpStatus;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
-@WebFilter(urlPatterns = "*")
+@WebFilter(urlPatterns = "/*")
 public class CorsFilter implements Filter {
 
     private static final String HTTP_METHOD_OPTIONS = "OPTIONS";
+    private static final Set<String> ALLOWED_ORIGINS = new HashSet<>();
+    static {
+        ALLOWED_ORIGINS.add("http://localhost:63342");
+        ALLOWED_ORIGINS.add("http://127.0.0.1:63342");
+        // 添加其他允许的来源
+        // ALLOWED_ORIGINS.add("http://example.com");
+    }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        /*
-         * 跨域请求头服务端配置：
-         * 1.Access-Control-Allow-Origin：设置允许跨域的配置， 响应头指定了该响应的资源是否被允许与给定的origin共享
-         * 2.Access-Control-Allow-Credentials：响应头表示是否可以将对请求的响应暴露给页面（cookie）。返回true则可以，其他值均不可以。
-         * 3.Access-Control-Allow-Headers:用于预检请求中，列出了将会在正式请求的 Access-Control-Request-Headers 字段中出现的首部信息。（自定义请求头）
-         * 4.Access-Control-Allow-Methods：在对 预检请求的应答中明确了客户端所要访问的资源允许使用的方法或方法列表。
-         */
-        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-        httpResponse.setHeader("Access-Control-Allow-Origin", httpRequest.getHeader("Origin"));
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, access-token");
-        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST, OPTIONS");
-        if (HTTP_METHOD_OPTIONS.equals(httpRequest.getMethod())) {
-            httpResponse.setStatus(HttpStatus.ACCEPTED.value());
-            httpResponse.getWriter().close();
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String origin = request.getHeader("Origin");
+
+        // 检查来源是否在允许列表中
+        if (ALLOWED_ORIGINS.contains(origin)) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setHeader("Vary", "Origin"); // 重要：防止缓存污染
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        }
+
+        // 设置其他 CORS 头
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, access-token");
+        response.setHeader("Access-Control-Max-Age", "3600");
+
+        // 处理预检请求
+        if (HTTP_METHOD_OPTIONS.equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204 No Content
+            response.getWriter().close();
             return;
         }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
@@ -43,5 +57,4 @@ public class CorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
-
 }

@@ -31,8 +31,8 @@ import org.ztw.fastkill.domain.model.SeckillUser;
 
 @RestController
 @RequestMapping(value = "/user")
-@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
 @Slf4j
+@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
 public class SeckillUserController {
 
     @Autowired
