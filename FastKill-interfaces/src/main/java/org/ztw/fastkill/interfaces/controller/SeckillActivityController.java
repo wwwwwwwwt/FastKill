@@ -44,6 +44,21 @@ public class SeckillActivityController {
         }
     }
 
+    @RequestMapping(value = "/getSecKillActivityList", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseMessage<List<SeckillActivity>> getSecKillActivityList() {
+        try{
+            List<SeckillActivity> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatus(1);
+            log.info("getSecKillActivityListByStatus返回信息：{}", JSON.toJSON(secKillActivityDTOList));
+            return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), secKillActivityDTOList);
+        } catch (SeckillException e) {
+            log.error("getSecKillActivityListByStatus异常：{}", e.getMessage());
+            return ResponseMessageBuilder.build(e.getCode());
+        } catch (Exception e) {
+            log.error("getSecKillActivityListByStatus异常：{}", e.getMessage());
+            return ResponseMessageBuilder.build(ErrorCode.SERVER_EXCEPTION.getCode());
+        }
+    }
+
     @RequestMapping(value = "/getActivityListByStatus", method = {RequestMethod.GET})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatus(@RequestParam Integer status) {
         log.info("getSecKillActivityListByStatus: {}", status);

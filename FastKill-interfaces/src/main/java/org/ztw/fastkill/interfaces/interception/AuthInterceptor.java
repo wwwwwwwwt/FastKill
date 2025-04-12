@@ -1,6 +1,7 @@
 package org.ztw.fastkill.interfaces.interception;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.ztw.fastkill.common.code.HttpCode;
@@ -19,6 +20,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 放行预检请求
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            return true;
+        }
         Object attribute = request.getAttribute(USER_ID);
         if(null != attribute){
             return true;

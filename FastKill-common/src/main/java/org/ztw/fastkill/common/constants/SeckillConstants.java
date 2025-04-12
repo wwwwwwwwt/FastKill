@@ -26,7 +26,7 @@ public class SeckillConstants {
     /**
      * token请求头名称
      */
-    public static final String TOKEN_HEADER_NAME = "access-token";
+    public static final String TOKEN_HEADER_NAME = "Access-Token";
 
     /**
      * JWT的密钥
