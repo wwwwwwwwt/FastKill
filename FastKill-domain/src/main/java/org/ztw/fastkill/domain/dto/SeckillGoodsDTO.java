@@ -1,11 +1,13 @@
 package org.ztw.fastkill.domain.dto;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
 public class SeckillGoodsDTO implements Serializable {
     private static final long serialVersionUID = -8447592991812016065L;
     //数据id
