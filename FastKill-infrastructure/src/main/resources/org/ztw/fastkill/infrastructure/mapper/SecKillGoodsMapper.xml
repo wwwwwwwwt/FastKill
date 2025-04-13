@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ztw.fastkill.infrastructure.mapper.SecKillGoodsMapper">
+
+    <resultMap id="baseResultMap" type="org.ztw.fastkill.domain.model.SeckillGoods">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
+        <result column="activity_price" property="activityPrice" jdbcType="DECIMAL"/>
+        <result column="limit_num" property="limitNum" jdbcType="INTEGER"/>
+        <result column="initial_stock" property="initialStock" jdbcType="INTEGER"/>
+        <result column="available_stock" property="availableStock" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        goods_name,
+        activity_id,
+        start_time,
+        end_time,
+        activity_price,
+        original_price,
+        initial_stock,
+        available_stock,
+        description,
+        img_url,
+        status,
+        limit_num
+    </sql>
+
+    <insert id="saveSeckillGoods" parameterType="org.ztw.fastkill.domain.model.SeckillGoods">
+        insert into seckill_goods(  <include refid="Base_Column_List"/> )
+        values (#{id}, #{goodsName}, #{activityId}, #{startTime}, #{endTime}, #{originalPrice}, #{activityPrice},
+        #{initialStock}, #{availableStock}, #{description}, #{imgUrl}, #{status}, #{limitNum})
+    </insert>
+
+    <select id="getSeckillGoodsId" resultMap="baseResultMap">
+        select  <include refid="Base_Column_List" /> from seckill_goods where id = #{id}
+    </select>
+
+    <select id="getSeckillGoodsByActivityId" resultMap="baseResultMap">
+        select <include refid="Base_Column_List" /> from seckill_goods where activity_id = #{activityId}
+    </select>
+
+    <update id="updateSecKillGoodsStatus">
+        update seckill_goods set status = #{status} where id = #{id}
+    </update>
+
+    <update id="updateGoodsAvailableStock">
+        update seckill_goods set available_stock = available_stock - #{count} where id = #{id}
+    </update>
+
+    <select id="getAvailableStockById" resultType="java.lang.Integer">
+        select available_stock from  seckill_goods where id = #{id}
+    </select>
+</mapper>
