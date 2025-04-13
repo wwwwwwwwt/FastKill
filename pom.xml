@@ -47,6 +47,8 @@
         <shiro.spring.version>1.3.2</shiro.spring.version>
         <jwt.version>3.4.0</jwt.version>
         <docker.image.prefix>seckill</docker.image.prefix>
+        <redisson.version>3.16.3</redisson.version>
+
     </properties>
 
     <dependencies>
@@ -167,7 +169,11 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>${redisson.version}</version>
+        </dependency>
         <!--Junit-->
         <dependency>
             <groupId>junit</groupId>
