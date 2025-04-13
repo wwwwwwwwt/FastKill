@@ -45,5 +45,6 @@ public class SeckillActivity implements Serializable {
     private Integer status;
     //活动描述
     private String activityDesc;
-
+    //数据版本
+    private Long version;
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface SeckillActivityMapper {
+    List<SeckillActivity> getSeckillActivityList(@Param("status") Integer status);
+
     List<SeckillActivity> getSecKillActivityListByStatus(@Param("status") Integer status);
 
     Long saveSecKillActivity(SeckillActivity seckillActivity);

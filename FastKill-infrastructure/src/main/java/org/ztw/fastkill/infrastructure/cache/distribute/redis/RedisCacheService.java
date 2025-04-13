@@ -88,6 +88,11 @@ public class RedisCacheService implements DistributedCacheService {
     }
 
     @Override
+    public Object getObject(String key) {
+        return redisTemplate.opsForValue().get(key);
+    }
+
+    @Override
     public String getString(String key) {
         Object result = redisTemplate.opsForValue().get(key);
         if (result == null) {

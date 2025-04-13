@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.ztw.fastkill.infrastructure.lock.DistributedLock;
 import org.ztw.fastkill.infrastructure.lock.factoty.DistributedLockFactory;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 
@@ -33,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class RedissonLockFactory implements DistributedLockFactory {
     private final Logger logger = LoggerFactory.getLogger(RedissonLockFactory.class);
 
-    @Autowired
+    @Resource
     private RedissonClient redissonClient;
 
     @Override

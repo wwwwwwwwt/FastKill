@@ -16,6 +16,8 @@ public interface DistributedCacheService {
 
     <T> T getObject(String key, Class<T> targetClass);
 
+    Object getObject(String key);
+
     String getString(String key);
 
     <T> List<T> getList(String key, Class<T> targetClass);

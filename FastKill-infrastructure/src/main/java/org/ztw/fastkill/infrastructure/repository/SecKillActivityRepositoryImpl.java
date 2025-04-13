@@ -49,4 +49,9 @@ public class SecKillActivityRepositoryImpl implements SecKillActivityRepository 
         if(seckillActivity == null)return 0;
         return seckillActivityMapper.updateSecKillActivity(seckillActivity);
     }
+
+    @Override
+    public List<SeckillActivity> getSeckillActivityList(Integer status) {
+        return seckillActivityMapper.getSeckillActivityList(status);
+    }
 }

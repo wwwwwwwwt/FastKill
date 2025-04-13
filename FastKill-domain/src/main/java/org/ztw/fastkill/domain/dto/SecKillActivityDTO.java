@@ -22,4 +22,5 @@ public class SecKillActivityDTO implements Serializable {
     private Date endTime;
     private Integer status;
     private String activityDesc;
+    private Long version;
 }
