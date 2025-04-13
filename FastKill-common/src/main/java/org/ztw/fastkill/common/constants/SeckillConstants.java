@@ -32,4 +32,17 @@ public class SeckillConstants {
      * JWT的密钥
      */
     public static final String JWT_SECRET = "a814edb0e7c1ba4c";
+
+    /*****************缓存相关的配置****************/
+    public static final Long FIVE_MINUTES = 5 * 60L;
+    public static final Long FIVE_SECONDS = 5L;
+    public static final Long HOURS_24 = 3600 * 24L;
+
+    public static final String SECKILL_ACTIVITY_CACHE_KEY = "SECKILL_ACTIVITY_CACHE_KEY";
+    public static final String SECKILL_ACTIVITIES_CACHE_KEY = "SECKILL_ACTIVITIES_CACHE_KEY";
+
+    public static final String SECKILL_GOODS_CACHE_KEY = "SECKILL_GOODS_CACHE_KEY";
+    public static final String SECKILL_GOODSES_CACHE_KEY = "SECKILL_GOODSES_CACHE_KEY";
+
+
 }

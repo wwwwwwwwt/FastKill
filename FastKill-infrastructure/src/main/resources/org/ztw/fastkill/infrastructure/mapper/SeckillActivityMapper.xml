@@ -10,6 +10,11 @@
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="activity_desc" property="activityDesc" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <sql id="Base_Column_List">
+        id, activity_name, start_time, end_time, status, activity_desc
+    </sql>
+
     <insert id="saveSecKillActivity" parameterType="org.ztw.fastkill.domain.model.SeckillActivity" keyProperty="id" useGeneratedKeys="true">
         insert into seckill_activity (id, activity_name, start_time, end_time, status, activity_desc)
         values (#{id}, #{activityName}, #{startTime}, #{endTime}, #{status}, #{activityDesc})
@@ -55,6 +60,15 @@
         select id, activity_name, start_time, end_time, status, activity_desc
         from seckill_activity
         where id = #{id}
+    </select>
+    <select id="getSeckillActivityList" resultMap="resultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from seckill_activity
+        where 1 = 1
+        <if test="status != null">
+            and status = #{status}
+        </if>
     </select>
 
 

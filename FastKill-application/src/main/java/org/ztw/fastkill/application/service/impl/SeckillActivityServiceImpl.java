@@ -2,7 +2,10 @@ package org.ztw.fastkill.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.ztw.fastkill.application.cache.model.SeckillBusinessCache;
+import org.ztw.fastkill.application.cache.service.activity.SeckillActivityListCacheService;
 import org.ztw.fastkill.application.service.SeckillActivityService;
 import org.ztw.fastkill.common.code.HttpCode;
 import org.ztw.fastkill.common.enums.SeckillActivityStatus;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,6 +28,9 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
 
     @Resource
     private SecKillActivityRepository secKillActivityRepository;
+
+    @Resource
+    private SeckillActivityListCacheService seckillActivityListCacheService;
 
     @Override
     public Long saveSecKillActivity(SecKillActivityDTO secKillActivityDTO) {
@@ -97,5 +104,25 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
         seckillActivity.setStatus(secKillActivity.getStatus());
         seckillActivity.setActivityDesc(secKillActivity.getActivityDesc());
         return secKillActivityRepository.updateSecKillActivity(seckillActivity);
+    }
+
+    @Override
+    public List<SecKillActivityDTO> getSeckillActivityList(Integer status, Long version) {
+        SeckillBusinessCache<List<SeckillActivity>> seckillActivityListCache = seckillActivityListCacheService.getCachedActivities(status, version);
+        if (!seckillActivityListCache.isExist()){
+            throw new SeckillException(HttpCode.ACTIVITY_NOT_EXISTS);
+        }
+        //稍后再试，前端需要对这个状态做特殊处理，即不去刷新数据，静默稍后再试
+        if (seckillActivityListCache.isRetryLater()){
+            throw new SeckillException(HttpCode.RETRY_LATER);
+        }
+        List<SecKillActivityDTO> secKillActivityDTOS = seckillActivityListCache.getData().stream().map(seckillActivity -> {
+            SecKillActivityDTO secKillActivityDTO = new SecKillActivityDTO();
+            BeanUtils.copyProperties(seckillActivity, secKillActivityDTO);
+            secKillActivityDTO.setVersion(seckillActivityListCache.getVersion());
+            return secKillActivityDTO;
+        }).collect(Collectors.toList());
+        log.info("getSeckillActivityList:{}", JSON.toJSON(secKillActivityDTOS));
+        return secKillActivityDTOS;
     }
 }

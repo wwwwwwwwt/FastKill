@@ -15,4 +15,7 @@ public interface SecKillActivityRepository {
     SeckillActivity getSecKillActivityById(Long id);
 
     int updateSecKillActivity(SeckillActivity seckillActivity);
+
+    List<SeckillActivity> getSeckillActivityList(Integer status);
+
 }

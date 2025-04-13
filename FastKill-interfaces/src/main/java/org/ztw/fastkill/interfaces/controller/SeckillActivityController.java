@@ -132,4 +132,10 @@ public class SeckillActivityController {
             return ResponseMessageBuilder.build(ErrorCode.SERVER_EXCEPTION.getCode());
         }
     }
+
+    @RequestMapping(value = "/seckillActivityList", method = {RequestMethod.GET,RequestMethod.POST})
+    public ResponseMessage<List<SecKillActivityDTO>> getSeckillActivityList(@RequestParam(value = "status", required = false) Integer status,
+                                                                            @RequestParam(value = "version", required = false) Long version){
+        return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillActivityService.getSeckillActivityList(status, version));
+    }
 }

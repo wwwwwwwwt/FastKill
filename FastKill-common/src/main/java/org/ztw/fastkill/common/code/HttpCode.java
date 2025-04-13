@@ -24,7 +24,10 @@ public enum HttpCode {
     TOKEN_EXPIRE(2013, "Token失效"),
     GOODS_OFFLINE(2014, "商品已下线"),
     GOODS_PUBLISH(2015, "商品未上线"),
-    DATA_PARSE_FAILED(2016, "数据解析失败")
+    DATA_PARSE_FAILED(2016, "数据解析失败"),
+
+    RETRY_LATER(2017, "稍后再试"),
+    USER_INVALID(2018, "当前账户异常，不能参与秒杀"),
     ;
 
     private Integer code;
