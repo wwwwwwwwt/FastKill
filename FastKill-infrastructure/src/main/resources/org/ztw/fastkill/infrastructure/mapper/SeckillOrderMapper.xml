@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ztw.fastkill.infrastructure.mapper.SeckillOrderMapper">
+
+    <resultMap id="baseResultMap" type="org.ztw.fastkill.domain.model.SeckillOrder">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_price" property="activityPrice" jdbcType="DECIMAL"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, goods_id, goods_name, activity_price, quantity, order_price, activity_id, status, create_time
+    </sql>
+
+    <insert id="saveSeckillOrder" parameterType="org.ztw.fastkill.domain.model.SeckillOrder">
+        insert into seckill_order ( <include refid="Base_Column_List"/> )
+        values (#{id}, #{userId}, #{goodsId}, #{goodsName}, #{activityPrice}, #{quantity}, #{orderPrice}, #{activityId}, #{status}, #{createTime})
+    </insert>
+
+    <select id="getSeckillOrderByUserId" resultMap="baseResultMap">
+        select <include refid="Base_Column_List"/> from seckill_order where user_id = #{userId}
+    </select>
+
+    <select id="getSeckillOrderByActivityId" resultMap="baseResultMap">
+        select <include refid="Base_Column_List"/> from seckill_order where activity_id = #{activityId}
+    </select>
+</mapper>
