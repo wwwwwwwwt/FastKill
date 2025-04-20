@@ -19,13 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/activity")
 @Slf4j
-@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
 public class SeckillActivityController {
 
     @Resource
     private SeckillActivityService seckillActivityService;
 
-    @RequestMapping(value = "/getActivityById", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getActivityById", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
     public ResponseMessage<SeckillActivity> getSecKillActivityById(@RequestParam Long id) {
         log.info("getSecKillActivityById: {}", id);
         try{
@@ -44,7 +43,7 @@ public class SeckillActivityController {
         }
     }
 
-    @RequestMapping(value = "/getSecKillActivityList", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
+    @RequestMapping(value = "/getSeckillActivityList", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityList() {
         try{
             List<SeckillActivity> secKillActivityDTOList = seckillActivityService.getSecKillActivityListByStatus(1);
@@ -59,7 +58,7 @@ public class SeckillActivityController {
         }
     }
 
-    @RequestMapping(value = "/getActivityListByStatus", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getActivityListByStatus", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatus(@RequestParam Integer status) {
         log.info("getSecKillActivityListByStatus: {}", status);
         try{
@@ -75,7 +74,7 @@ public class SeckillActivityController {
         }
     }
 
-    @RequestMapping(value = "/getActivityListByStatusAndTime", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getActivityListByStatusAndTime", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatusAndTime(@RequestParam Integer status, @RequestParam Date currentTime) {
         log.info("getSecKillActivityListByStatusAndTime: {}, {}", status, currentTime);
         try{
@@ -91,7 +90,7 @@ public class SeckillActivityController {
         }
     }
 
-    @RequestMapping(value = "/getActivityListByStatusAndNow", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getActivityListByStatusAndNow", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityListByStatusAndNow(@RequestParam Integer status) {
        return getSecKillActivityListByStatusAndTime(status, new Date());
     }

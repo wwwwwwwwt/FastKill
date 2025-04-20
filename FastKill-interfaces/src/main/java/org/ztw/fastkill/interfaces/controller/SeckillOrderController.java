@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/order")
 @Slf4j
+//@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
 public class SeckillOrderController {
     @Autowired
     private SeckillOrderService seckillOrderService;

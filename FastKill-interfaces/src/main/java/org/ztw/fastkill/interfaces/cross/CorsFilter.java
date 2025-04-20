@@ -1,5 +1,7 @@
 package org.ztw.fastkill.interfaces.cross;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +19,12 @@ public class CorsFilter implements Filter {
         ALLOWED_ORIGINS.add("http://localhost:63342");
         ALLOWED_ORIGINS.add("http://127.0.0.1:63342");
         // 添加其他允许的来源
-        // ALLOWED_ORIGINS.add("http://example.com");
+//        ALLOWED_ORIGINS.add("http://localhost:63342/");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String origin = request.getHeader("Origin");
@@ -34,7 +35,6 @@ public class CorsFilter implements Filter {
             response.setHeader("Vary", "Origin"); // 重要：防止缓存污染
             response.setHeader("Access-Control-Allow-Credentials", "true");
         }
-
         // 设置其他 CORS 头
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, access-token");
@@ -54,7 +54,4 @@ public class CorsFilter implements Filter {
     public void destroy() {
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
 }

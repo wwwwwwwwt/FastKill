@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/goods")
-@CrossOrigin(value = "*")
+//@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", originPatterns = "*")
 @Slf4j
 public class SeckillGoodsController {
     @Resource

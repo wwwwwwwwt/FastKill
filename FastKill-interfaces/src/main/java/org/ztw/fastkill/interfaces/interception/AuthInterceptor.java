@@ -1,5 +1,6 @@
 package org.ztw.fastkill.interfaces.interception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -14,14 +15,16 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
+@Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
     private static final String USER_ID = "userId";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 放行预检请求
+//         放行预检请求
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            log.info("OPTIONS请求，放行");
             return true;
         }
         Object attribute = request.getAttribute(USER_ID);
@@ -42,5 +45,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpServletRequestWrapper httpServletRequestWrapper = new HttpServletRequestWrapper(request);
         httpServletRequestWrapper.setAttribute(USER_ID, userId);
         return true;
+
     }
 }
