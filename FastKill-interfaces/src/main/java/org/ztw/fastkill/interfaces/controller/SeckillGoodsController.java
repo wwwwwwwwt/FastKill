@@ -30,7 +30,7 @@ public class SeckillGoodsController {
      * 获取商品详情
      */
     @RequestMapping(value = "/getSeckillGoodsId", method = {RequestMethod.GET,RequestMethod.POST})
-    public ResponseMessage<SeckillGoods> getSeckillGoodsId(@RequestParam Long id){
+    public ResponseMessage<SeckillGoods> getSeckillGoodsId(@RequestParam String id){
         return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillGoodsService.getSeckillGoodsId(id));
     }
 
@@ -38,7 +38,7 @@ public class SeckillGoodsController {
      * 获取商品列表
      */
     @RequestMapping(value = "/getSeckillGoodsByActivityId", method = {RequestMethod.GET,RequestMethod.POST})
-    public ResponseMessage<List<SeckillGoods>> getSeckillGoodsByActivityId(@RequestParam Long activityId){
+    public ResponseMessage<List<SeckillGoods>> getSeckillGoodsByActivityId(@RequestParam String activityId){
         return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillGoodsService.getSeckillGoodsByActivityId(activityId));
     }
 

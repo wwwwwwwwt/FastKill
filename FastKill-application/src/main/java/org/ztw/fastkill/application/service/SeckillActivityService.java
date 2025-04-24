@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface SeckillActivityService {
-    Long saveSecKillActivity(SecKillActivityDTO secKillActivityDTO);
+    String saveSecKillActivity(SecKillActivityDTO secKillActivityDTO);
 
     List<SeckillActivity> getSecKillActivityListByStatus(Integer status);
 

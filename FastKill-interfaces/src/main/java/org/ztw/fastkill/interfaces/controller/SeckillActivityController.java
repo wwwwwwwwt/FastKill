@@ -96,10 +96,10 @@ public class SeckillActivityController {
     }
 
     @RequestMapping(value = "/saveActivity", method = {RequestMethod.POST})
-    public ResponseMessage<Long> saveSecKillActivity(@RequestBody SecKillActivityDTO secKillActivityDTO) {
+    public ResponseMessage<String> saveSecKillActivity(@RequestBody SecKillActivityDTO secKillActivityDTO) {
         log.info("saveSecKillActivity: {}", JSON.toJSON(secKillActivityDTO));
         try{
-            Long activityId = seckillActivityService.saveSecKillActivity(secKillActivityDTO);
+            String activityId = seckillActivityService.saveSecKillActivity(secKillActivityDTO);
             log.info("saveSecKillActivity返回活动id：{}", activityId);
             return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), activityId);
         } catch (SeckillException e) {

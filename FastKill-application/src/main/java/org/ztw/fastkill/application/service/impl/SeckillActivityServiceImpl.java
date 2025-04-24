@@ -33,7 +33,7 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
     private SeckillActivityListCacheService seckillActivityListCacheService;
 
     @Override
-    public Long saveSecKillActivity(SecKillActivityDTO secKillActivityDTO) {
+    public String saveSecKillActivity(SecKillActivityDTO secKillActivityDTO) {
         if (secKillActivityDTO == null) throw new SeckillException(HttpCode.PARAMS_INVALID);
         SeckillActivity seckillActivity = new SeckillActivity();
         seckillActivity.setActivityName(secKillActivityDTO.getActivityName());
@@ -41,7 +41,7 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
         seckillActivity.setEndTime(secKillActivityDTO.getEndTime());
         seckillActivity.setStatus(SeckillActivityStatus.PUBLISHED.getCode());
         seckillActivity.setActivityDesc(secKillActivityDTO.getActivityDesc());
-        seckillActivity.setId(SnowFlakeFactory.getSnowFlake().nextId());
+        seckillActivity.setId(String.valueOf(SnowFlakeFactory.getSnowFlake().nextId()));
         return secKillActivityRepository.saveSecKillActivity(seckillActivity);
     }
 

@@ -51,14 +51,16 @@ public class SecKillGoodsServiceImpl implements SecKillGoodsService {
     }
 
     @Override
-    public SeckillGoods getSeckillGoodsId(Long id) {
-        return secKillGoodsRepository.getSecKillGoodsById(id);
+    public SeckillGoods getSeckillGoodsId(String id) {
+        long Id = Long.parseLong(id);
+        return secKillGoodsRepository.getSecKillGoodsById(Id);
     }
 
 
     @Override
-    public List<SeckillGoods> getSeckillGoodsByActivityId(Long activityId) {
-        return secKillGoodsRepository.getSecKillGoodsByActivityId(activityId);
+    public List<SeckillGoods> getSeckillGoodsByActivityId(String activityId) {
+        long id = Long.parseLong(activityId);
+        return secKillGoodsRepository.getSecKillGoodsByActivityId(id);
     }
 
     @Override

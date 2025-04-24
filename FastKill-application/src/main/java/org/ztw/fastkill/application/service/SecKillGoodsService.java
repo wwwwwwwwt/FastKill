@@ -14,12 +14,12 @@ public interface SecKillGoodsService {
     /**
      * 根据id获取商品详细信息
      */
-    SeckillGoods getSeckillGoodsId(Long id);
+    SeckillGoods getSeckillGoodsId(String id);
 
     /**
      * 根据活动id获取商品列表
      */
-    List<SeckillGoods> getSeckillGoodsByActivityId(Long activityId);
+    List<SeckillGoods> getSeckillGoodsByActivityId(String activityId);
 
     /**
      * 修改商品状态

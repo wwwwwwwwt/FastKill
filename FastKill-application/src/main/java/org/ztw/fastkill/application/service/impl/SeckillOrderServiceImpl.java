@@ -40,7 +40,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         }
 
         //获取商品
-        SeckillGoods seckillGoods = seckillGoodsService.getSeckillGoodsId(seckillOrderDTO.getGoodsId());
+        SeckillGoods seckillGoods = seckillGoodsService.getSeckillGoodsId(String.valueOf(seckillOrderDTO.getGoodsId()));
         //商品不存在
         if (seckillGoods == null){
             throw new SeckillException(HttpCode.GOODS_NOT_EXISTS);

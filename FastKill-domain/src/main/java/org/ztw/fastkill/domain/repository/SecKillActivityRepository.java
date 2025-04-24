@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface SecKillActivityRepository {
-    long saveSecKillActivity(SeckillActivity seckillActivity);
+    String saveSecKillActivity(SeckillActivity seckillActivity);
 
     List<SeckillActivity> getSecKillActivityListByStatus(Integer status);
 

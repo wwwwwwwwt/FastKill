@@ -19,11 +19,11 @@ public class SecKillActivityRepositoryImpl implements SecKillActivityRepository 
     private SeckillActivityMapper seckillActivityMapper;
 
     @Override
-    public long saveSecKillActivity(SeckillActivity seckillActivity) {
+    public String saveSecKillActivity(SeckillActivity seckillActivity) {
         if (seckillActivity == null) throw new SeckillException(HttpCode.PARAMS_INVALID);
         long id = seckillActivityMapper.saveSecKillActivity(seckillActivity);
         if (id <= 0) throw new SeckillException(HttpCode.PARAMS_INVALID);
-        return seckillActivity.getId();
+        return String.valueOf(seckillActivity.getId());
     }
 
     @Override

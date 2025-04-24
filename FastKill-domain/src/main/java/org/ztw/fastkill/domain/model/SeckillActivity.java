@@ -32,7 +32,7 @@ import java.util.Date;
 public class SeckillActivity implements Serializable {
     private static final long serialVersionUID = -7079319520596736847L;
     //活动id
-    private Long id;
+    private String id;
     //活动名称
     private String activityName;
     //活动开始时间
