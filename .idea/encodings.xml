@@ -6,14 +6,19 @@
     <file url="file://$PROJECT_DIR$/FastKill-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-app/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-application/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FastKill-application/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FastKill-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-domain/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-infrastructure/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-infrastructure/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-interfaces/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FastKill-interfaces/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-nginx/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FastKill-nginx/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FastKill-starter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-trigger/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-trigger/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FastKill-types/src/main/java" charset="UTF-8" />

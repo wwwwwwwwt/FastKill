@@ -28,12 +28,12 @@ import static org.ztw.fastkill.common.constants.SeckillConstants.SECKILL_ACTIVIT
 @Slf4j
 public class SeckillActivityListCacheServiceImpl implements SeckillActivityListCacheService {
 
-    @Resource
-    private LocalCacheService<Long, SeckillBusinessCache<List<SeckillActivity>>> localCacheService;
     //分布式锁的key
     private static final String SECKILL_ACTIVITES_UPDATE_CACHE_LOCK_KEY = "SECKILL_ACTIVITIES_UPDATE_CACHE_LOCK_KEY_";
     //本地锁
     private final Lock localCacheUpdatelock = new ReentrantLock();
+    @Resource
+    private LocalCacheService<Long, SeckillBusinessCache<List<SeckillActivity>>> localCacheService;
     @Resource
     private DistributedCacheService distributedCacheService;
     @Resource

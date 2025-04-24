@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.ztw.fastkill.application.builder.SeckillActivityBuilder;
 import org.ztw.fastkill.application.cache.model.SeckillBusinessCache;
+import org.ztw.fastkill.application.cache.service.activity.SeckillActivityCacheService;
 import org.ztw.fastkill.application.cache.service.activity.SeckillActivityListCacheService;
 import org.ztw.fastkill.application.service.SeckillActivityService;
 import org.ztw.fastkill.common.code.HttpCode;
@@ -31,6 +33,9 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
 
     @Resource
     private SeckillActivityListCacheService seckillActivityListCacheService;
+
+    @Resource
+    private SeckillActivityCacheService seckillActivityCacheService;
 
     @Override
     public String saveSecKillActivity(SecKillActivityDTO secKillActivityDTO) {
@@ -124,5 +129,23 @@ public class SeckillActivityServiceImpl implements SeckillActivityService {
         }).collect(Collectors.toList());
         log.info("getSeckillActivityList:{}", JSON.toJSON(secKillActivityDTOS));
         return secKillActivityDTOS;
+    }
+
+    @Override
+    public SecKillActivityDTO getSeckillActivity(Long activityId, Long version) {
+        if(activityId == null){
+            throw new SeckillException(HttpCode.PARAMS_INVALID);
+        }
+        SeckillBusinessCache<SeckillActivity> seckillActivityCache = seckillActivityCacheService.getCachedActivity(activityId, version);
+        if (!seckillActivityCache.isExist()){
+            throw new SeckillException(HttpCode.ACTIVITY_NOT_EXISTS);
+        }
+        if (seckillActivityCache.isRetryLater()){
+            throw new SeckillException(HttpCode.RETRY_LATER);
+        }
+        SecKillActivityDTO secKillActivityDTO = SeckillActivityBuilder.toSeckillActivityDTO(seckillActivityCache.getData());
+        secKillActivityDTO.setVersion(seckillActivityCache.getVersion());
+        log.info("getSeckillActivity:{}", JSON.toJSON(secKillActivityDTO));
+        return secKillActivityDTO;
     }
 }

@@ -42,6 +42,10 @@ public class SeckillActivityController {
             return ResponseMessageBuilder.build(ErrorCode.SERVER_EXCEPTION.getCode());
         }
     }
+    @RequestMapping(value = "/getActivity", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseMessage<SecKillActivityDTO> getSeckillActivity(Long activityId, Long version){
+        return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillActivityService.getSeckillActivity(activityId, version));
+    }
 
     @RequestMapping(value = "/getSeckillActivityList", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseMessage<List<SeckillActivity>> getSecKillActivityList() {

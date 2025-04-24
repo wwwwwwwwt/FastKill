@@ -21,4 +21,6 @@ public interface SeckillActivityService {
      * 活动列表
      */
     List<SecKillActivityDTO> getSeckillActivityList(Integer status, Long version);
+
+    SecKillActivityDTO getSeckillActivity(Long activityId, Long version);
 }
